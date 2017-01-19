@@ -15,33 +15,18 @@
       "values": [
         {
           "col": "data",
-          "idx": "never",
+          "idx": "...",
+          "val": 5
+        },
+        {
+          "col": "data",
+          "idx": "\"",
+          "val": 5
+        },
+        {
+          "col": "data",
+          "idx": "I",
           "val": 4
-        },
-        {
-          "col": "data",
-          "idx": "john",
-          "val": 3
-        },
-        {
-          "col": "data",
-          "idx": "democrats",
-          "val": 3
-        },
-        {
-          "col": "data",
-          "idx": "complete",
-          "val": 3
-        },
-        {
-          "col": "data",
-          "idx": "many",
-          "val": 3
-        },
-        {
-          "col": "data",
-          "idx": "people",
-          "val": 3
         },
         {
           "col": "data",
@@ -50,7 +35,7 @@
         },
         {
           "col": "data",
-          "idx": "to",
+          "idx": "great",
           "val": 3
         },
         {
@@ -60,7 +45,37 @@
         },
         {
           "col": "data",
-          "idx": "change",
+          "idx": "to",
+          "val": 3
+        },
+        {
+          "col": "data",
+          "idx": "many",
+          "val": 3
+        },
+        {
+          "col": "data",
+          "idx": "John",
+          "val": 3
+        },
+        {
+          "col": "data",
+          "idx": "is",
+          "val": 3
+        },
+        {
+          "col": "data",
+          "idx": ",",
+          "val": 3
+        },
+        {
+          "col": "data",
+          "idx": "bad",
+          "val": 2
+        },
+        {
+          "col": "data",
+          "idx": "complete",
           "val": 2
         },
         {
@@ -70,47 +85,32 @@
         },
         {
           "col": "data",
+          "idx": "A",
+          "val": 2
+        },
+        {
+          "col": "data",
+          "idx": "never",
+          "val": 2
+        },
+        {
+          "col": "data",
           "idx": "infested",
           "val": 2
         },
         {
           "col": "data",
-          "idx": "made",
+          "idx": "that",
           "val": 2
         },
         {
           "col": "data",
-          "idx": "get",
+          "idx": "results",
           "val": 2
         },
         {
           "col": "data",
-          "idx": "will",
-          "val": 2
-        },
-        {
-          "col": "data",
-          "idx": "really",
-          "val": 2
-        },
-        {
-          "col": "data",
-          "idx": "...",
-          "val": 2
-        },
-        {
-          "col": "data",
-          "idx": "political",
-          "val": 2
-        },
-        {
-          "col": "data",
-          "idx": "is",
-          "val": 2
-        },
-        {
-          "col": "data",
-          "idx": "apologize",
+          "idx": "real",
           "val": 2
         }
       ]

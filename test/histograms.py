@@ -12,8 +12,8 @@ import operator
 import json
 from collections import Counter
 import vincent
-import pandas
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 consumer_key = 'zQnhlYjr2Jzs449ffX32KjesC'
@@ -28,10 +28,8 @@ api = tweepy.API(auth)
 #nltk.download()
 punctuation = list(string.punctuation)
 print(punctuation)
-stop = stopwords.words('english') + punctuation + ['rt', 'via', 'the', 'amp', 'also', 'said', '.', ',', '...']
+stop = stopwords.words('english') + punctuation + ['rt', 'via', 'the', 'amp', 'also', 'said', '.', ',']
 count_all = Counter()
-dates_angry = []
-
 
 emoticons_str = r"""
     (?:
@@ -51,10 +49,9 @@ regex_str = [
     r'[0-9]+st', #Dates, like 1st
     r'[0-9]+nd', #Dates, like 2nd
     r'[.,!]+', #...
-    r'["][a-zA-Z0-9]+["]', #...
     r'(?:(?:\d+,?)+(?:\.?\d+)?)',  # numbers
     r"""(?:[a-z][a-z'\-_]+[a-z])""",  # words with - and '
-
+    r"""(?:[a-z][a-z"\-_]+[a-z])""",  # words with - and '
     r'(?:[\w_]+)',  # other words
     r'(?:\S)'  # anything else
 ]
@@ -65,8 +62,16 @@ emoticon_re = re.compile(r'^' + emoticons_str + '$', re.VERBOSE | re.IGNORECASE)
 def getFrequencyGraph(word_freq):
     labels, freq = zip(*word_freq)
     data = {'data': freq, 'x': labels}
-    bar = vincent.Bar(data, iter_idx='x')
-    bar.to_json('term_freq.json')
+
+    indexes = np.arange(len(labels))
+    width = 1
+
+    plt.bar(indexes, freq, width)
+    plt.xticks(indexes + width * 0.5, labels)
+    plt.show()
+    # bar = vincent.Bar(data, iter_idx='x')
+    # bar.to_json('term_freq.json')
+
 
 
 def tokenize(s):
@@ -86,26 +91,27 @@ def preprocess(s, lowercase=False):
 i = 0
 #print (stop)
 
+def getBigrams(s):
+    count_all.clear()
+   # print(preprocess(s))
+    terms_bigram = list(bigrams(preprocess(s)))
+    #print(terms_bigram)
+    count_all.update(terms_bigram)
+    print(count_all.most_common(10))
+
+
+
 for status in tweepy.Cursor(api.user_timeline, id="@realdonaldtrump").items(20):
     # Process a single status
     i = i+1
-    # preprocess(status.text.lower())
-    #
-    # print(count_all.most_common(20))
-    if "Ivanka" in status.text:
-        dates_angry.append(status.created_at)
-    print(str(status.created_at)+". " + status.text)
-    #getFrequencyGraph(count_all.most_common(20))
+    #tokens = word_tokenize(status.text)
+    # for token in tokens:
+    #terms_bigram = getBigrams(status.text)
+   # print(count_all.most_common(5))
+    preprocess(status.text)
+    print(count_all.most_common(20))
+    #print(preprocess(status.text))
+    #print(status.text)
     print("******")
 
-ones = [1]*len(dates_angry)
-print(dates_angry)
-idx = pandas.DatetimeIndex(dates_angry)
-angry = pandas.Series(dates_angry, index=idx)
-#per_minute = angry.resample('1Min', how='sum').fillna(0)
-print(angry)
-time_chart = vincent.Line(angry)
-time_chart.axis_titles(x='Time', y='Freq')
-
-per_minute = angry.resample(rule='1Min')
-time_chart.to_json('time_chart.json')
+getFrequencyGraph(count_all.most_common(20))
