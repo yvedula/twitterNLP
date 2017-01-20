@@ -14,12 +14,13 @@ from collections import Counter
 import vincent
 import numpy as np
 import matplotlib.pyplot as plt
+from test import settings
 
 
-consumer_key = 'zQnhlYjr2Jzs449ffX32KjesC'
-consumer_secret = 'z4e50oEBrBSFBklXZkAwUpfQ1bMkdzcDYgzrnNNEYcKhbIk5PC'
-access_token = '449638146-81zTSVFCKrqz2ZqCtbsUg9S3q5fC5eekpm3NknY9'
-access_secret = 'xTQOdtxNgGg9ciYntAqrU6cJ8HbKnjuuxz08hGNOvHuNo'
+consumer_key = settings.consumer_key
+consumer_secret = settings.consumer_secret
+access_token = settings.access_token
+access_secret = settings.access_secret
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
@@ -64,7 +65,7 @@ def getFrequencyGraph(word_freq):
     data = {'data': freq, 'x': labels}
 
     indexes = np.arange(len(labels))
-    width = 1
+    width = 0.7
 
     plt.bar(indexes, freq, width)
     plt.xticks(indexes + width * 0.5, labels)
@@ -100,18 +101,28 @@ def getBigrams(s):
     print(count_all.most_common(10))
 
 
-
-for status in tweepy.Cursor(api.user_timeline, id="@realdonaldtrump").items(20):
+tweets = []
+tweets2 = []
+for status in tweepy.Cursor(api.user_timeline, id="@realdonaldtrump").items(5):
     # Process a single status
     i = i+1
-    #tokens = word_tokenize(status.text)
-    # for token in tokens:
-    #terms_bigram = getBigrams(status.text)
-   # print(count_all.most_common(5))
-    preprocess(status.text)
-    print(count_all.most_common(20))
-    #print(preprocess(status.text))
-    #print(status.text)
-    print("******")
 
-getFrequencyGraph(count_all.most_common(20))
+    s = status.text
+    tweets.append(s)
+
+i = len(tweets)-1
+temp = ""
+while i >=0:
+    s = tweets[i]
+    temp = tweets[i]
+    if s.endswith(".."):
+        while tweets[i].endswith(".."):
+            temp = temp[0:tweets[i].index("..")]+" " + tweets[i-1]
+            i = i-1
+    #print(temp)
+
+    tweets2.append(temp)
+
+    i = i-1
+print(tweets2)
+#getFrequencyGraph(count_all.most_common(20))
